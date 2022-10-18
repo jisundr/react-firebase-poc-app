@@ -1,21 +1,36 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import { SnackbarProvider } from "notistack";
+import { RouterProvider } from "react-router-dom";
+import { createTheme, CssBaseline, ThemeProvider } from "@mui/material";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
-import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import "./index.css";
+import createRouter from "./routes/createRouter";
+
+import "@fontsource/roboto/300.css";
+import "@fontsource/roboto/400.css";
+import "@fontsource/roboto/500.css";
+import "@fontsource/roboto/700.css";
 
 const queryClient = new QueryClient();
+const theme = createTheme();
+const router = createRouter();
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
+
 root.render(
   <React.StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <App />
-    </QueryClientProvider>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <QueryClientProvider client={queryClient}>
+        <SnackbarProvider maxSnack={4}>
+          <RouterProvider router={router} />
+        </SnackbarProvider>
+      </QueryClientProvider>
+    </ThemeProvider>
   </React.StrictMode>
 );
 
